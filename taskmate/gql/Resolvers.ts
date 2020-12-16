@@ -1,7 +1,7 @@
 import { ServerlessMysql } from "serverless-mysql";
 import { OkPacket } from "mysql";
 import { UserInputError } from "apollo-server-micro";
-import { Resolvers, TaskStatus } from "./codegen/graphql";
+import { Resolvers, TaskStatus } from "./codegen/graphql-backend";
 
 interface ApolloContext {
   db: ServerlessMysql;
@@ -35,7 +35,6 @@ const getTaskById = async (id: number, db: ServerlessMysql) => {
 export const resolvers: Resolvers<ApolloContext> = {
   Query: {
     async tasks(parent, args, context) {
-      console.log("in tasks");
       const { status } = args;
       let query = "SELECT id, title, task_status FROM tasks";
       const queryParams: string[] = [];
@@ -43,7 +42,6 @@ export const resolvers: Resolvers<ApolloContext> = {
         query += " WHERE task_status = ?";
         queryParams.push(status);
       }
-      console.log("context: ",context);
       const tasks = await context.db.query<TasksDbQueryResult>(
         query,
         queryParams

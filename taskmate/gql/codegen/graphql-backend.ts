@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { GraphQLResolveInfo } from 'graphql';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -11,8 +11,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any;
 };
 
 export enum TaskStatus {
@@ -74,12 +72,6 @@ export type MutationUpdateTaskArgs = {
 export type MutationDeleteTaskArgs = {
   id: Scalars['Int'];
 };
-
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE'
-}
-
 
 
 
@@ -167,8 +159,6 @@ export type ResolversTypes = {
   UpdateTaskInput: UpdateTaskInput;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
-  CacheControlScope: CacheControlScope;
-  Upload: ResolverTypeWrapper<Scalars['Upload']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
@@ -181,7 +171,6 @@ export type ResolversParentTypes = {
   UpdateTaskInput: UpdateTaskInput;
   Query: {};
   Mutation: {};
-  Upload: Scalars['Upload'];
   Boolean: Scalars['Boolean'];
 };
 
@@ -203,15 +192,10 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteTask?: Resolver<Maybe<ResolversTypes['Task']>, ParentType, ContextType, RequireFields<MutationDeleteTaskArgs, 'id'>>;
 };
 
-export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
-  name: 'Upload';
-}
-
 export type Resolvers<ContextType = any> = {
   Task?: TaskResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
-  Upload?: GraphQLScalarType;
 };
 
 
