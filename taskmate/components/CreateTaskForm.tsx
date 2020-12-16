@@ -1,12 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useCreateTaskMutation } from "../gql/codegen/graphql-frontend";
 
-const CreateTaskForm = () => {
-  const [title, setTitle] = useState('');
+interface Props {
+  onSuccess: () => void;
+}
+
+const CreateTaskForm: React.FC<Props> = ({ onSuccess }) => {
+  const [title, setTitle] = useState("");
+  const [createTask, { loading, error }] = useCreateTaskMutation({
+    onCompleted: () => {
+      onSuccess();
+      setTitle("");
+    },
+  });
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!loading) {
+      try {
+        await createTask({ variables: { input: { title } } });
+      } catch (e) {
+        // Log the error.
+      }
+    }
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
+      {error && <p className="alert-error">An error occurred.</p>}
       <input
         type="text"
         name="title"
