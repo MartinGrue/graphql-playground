@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
-import { TaskStatus } from '../gql/codegen/graphql-frontend';
+import React from "react";
+import Link from "next/link";
+import { TaskStatus } from "../gql/codegen/graphql-frontend";
 
 interface Props {
   status?: TaskStatus;
@@ -10,8 +10,8 @@ const TaskFilter: React.FC<Props> = ({ status }) => {
   return (
     <ul className="task-filter">
       <li>
-        <Link href="/" scroll={false}>
-          <a className={!status ? 'task-filter-active' : ''}>All</a>
+        <Link href="/" scroll={false} shallow={true}>
+          <a className={!status ? "task-filter-active" : ""}>All</a>
         </Link>
       </li>
       <li>
@@ -22,7 +22,7 @@ const TaskFilter: React.FC<Props> = ({ status }) => {
           shallow={true}
         >
           <a
-            className={status === TaskStatus.Active ? 'task-filter-active' : ''}
+            className={status === TaskStatus.Active ? "task-filter-active" : ""}
           >
             Active
           </a>
@@ -37,7 +37,7 @@ const TaskFilter: React.FC<Props> = ({ status }) => {
         >
           <a
             className={
-              status === TaskStatus.Completed ? 'task-filter-active' : ''
+              status === TaskStatus.Completed ? "task-filter-active" : ""
             }
           >
             Completed
